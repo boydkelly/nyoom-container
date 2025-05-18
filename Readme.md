@@ -9,6 +9,6 @@ Tested with Podman on Fedora; Should work with podman on any distro and probably
 I have not been able to get anything more recent to start.  There are issues with both packer an hotpot.
 However there are also now multiple issues with plugins that are no longer compatible.
 
-nvim-notify and lspconfig: update to neovim 10 solves this
-tree-sitter:  using version with same checkout date as nyoom/packer/hotpot, but probably not compatible with neovim 10
-much more, but it does start up....
+. nvim-notify and lspconfig: update to neovim 10/f40 solves this
+. tree-sitter:  using version with same checkout date as nyoom/packer/hotpot, but probably not compatible with neovim 10
+. much more, but it does start up....
