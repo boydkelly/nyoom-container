@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+IMAGE_NAME="nyoom-image"
+CONTAINER_NAME="nyoom-container"
+CONTAINER_HOME="/root"
+
+# Step 0: Ensure named volumes exist (cache and local)
+podman volume inspect nyoom-cache >/dev/null 2>&1 || podman volume create nyoom-cache
+podman volume inspect nyoom-local >/dev/null 2>&1 || podman volume create nyoom-local
+
+# Step 1: Check if the image exists, build if missing
+podman image exists "$IMAGE_NAME" || podman build -t "$IMAGE_NAME" .
+
+# Step 2: Ensure submodule nyoom.nvim is initialized
+[[ -f "nyoom.nvim/.git" ]] || git submodule update --init nyoom.nvim
+
+# Step 3: Run container with named volumes for cache and local
+podman run -it \
+  --replace \
+  --security-opt label=disable \
+  -v nyoom.nvim:"$CONTAINER_HOME/.config/nvim":Z \
+  -v nyoom-cache:"$CONTAINER_HOME/.cache":Z \
+  -v nyoom-local:"$CONTAINER_HOME/.local":Z \
+  --name "$CONTAINER_NAME" \
+  "$IMAGE_NAME" bash
