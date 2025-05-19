@@ -16,7 +16,7 @@ RUN sed -i '/^#auth/s/^#//g' /etc/pam.d/su
 
 RUN microdnf -y swap glibc-minimal-langpack glibc-langpack-en && microdnf clean all
 RUN microdnf -y upgrade && microdnf clean all
-ENV LANG=us_EN.UTF-8
+ENV LANG=en_US.UTF-8
 ENV CONTAINER_NAME=nyoom-container
 
 #USER nyoom
